@@ -5,8 +5,8 @@ USER=root
 TRANSMISSION_DIR=/var/lib/transmission
 CONFIG_DIR=${TRANSMISSION_DIR}/.config/transmission-daemon
 
-if [[ -z ${RPC_USRENAME} ]]; then
-    RPC_USRENAME=transmission
+if [[ -z ${RPC_USERNAME} ]]; then
+    RPC_USERNAME=transmission
 fi
 if [[ -z ${RPC_PASSWORD} ]]; then
     RPC_PASSWORD=transmission
@@ -79,7 +79,7 @@ if [[ ! -d ${CONFIG_DIR} ]]; then
     "rpc-password": "${RPC_PASSWORD}",
     "rpc-port": 9091,
     "rpc-url": "/transmission/",
-    "rpc-username": "${RPC_USRENAME}",
+    "rpc-username": "${RPC_USERNAME}",
     "rpc-whitelist": "127.0.0.1,::1",
     "rpc-whitelist-enabled": false,
     "scrape-paused-torrents-enabled": true,
