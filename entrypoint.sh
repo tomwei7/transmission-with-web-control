@@ -24,6 +24,7 @@ if [[ ! -z ${DOCKER_UID} && ! -f /.user-initialized ]]; then
     groupadd -f -g ${DOCKER_GID} transmission
     useradd -u ${DOCKER_UID} -g ${DOCKER_GID} --home-dir ${TRANSMISSION_DIR} transmission
     USER=transmission
+    chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
     touch /.user-initialized
 fi
 
@@ -104,7 +105,6 @@ if [[ ${USER} == "root" ]];then
     exec "$@"
 fi
 
-chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
 exec su - ${USER} <<EOF
 exec $@
 EOF
