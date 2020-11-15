@@ -17,15 +17,17 @@ if [[ ! -d ${TRANSMISSION_DIR} ]]; then
 fi
 
 # switch user
-if [[ ! -z ${DOCKER_UID} && ! -f /.user-initialized ]]; then
+if [[ ! -z ${DOCKER_UID} ]]; then
     if [[ -z ${DOCKER_GID} ]]; then
         DOCKER_GID=${DOCKER_UID}
     fi
-    groupadd -f -g ${DOCKER_GID} transmission
-    useradd -u ${DOCKER_UID} -g ${DOCKER_GID} --home-dir ${TRANSMISSION_DIR} transmission
     USER=transmission
-    chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
-    touch /.user-initialized
+    if [[ ! -f /.user-initialized ]]; then
+        groupadd -f -g ${DOCKER_GID} transmission
+        useradd -u ${DOCKER_UID} -g ${DOCKER_GID} --home-dir ${TRANSMISSION_DIR} transmission
+        chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
+        touch /.user-initialized
+    fi
 fi
 
 # setup basic config
