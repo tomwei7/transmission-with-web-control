@@ -16,20 +16,6 @@ if [[ ! -d ${TRANSMISSION_DIR} ]]; then
     mkdir -p ${TRANSMISSION_DIR}
 fi
 
-# switch user
-if [[ ! -z ${DOCKER_UID} ]]; then
-    if [[ -z ${DOCKER_GID} ]]; then
-        DOCKER_GID=${DOCKER_UID}
-    fi
-    USER=transmission
-    if [[ ! -f /.user-initialized ]]; then
-        groupadd -f -g ${DOCKER_GID} transmission
-        useradd -u ${DOCKER_UID} -g ${DOCKER_GID} --home-dir ${TRANSMISSION_DIR} transmission
-        chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
-        touch /.user-initialized
-    fi
-fi
-
 # setup basic config
 if [[ ! -d ${CONFIG_DIR} ]]; then
     mkdir -p ${CONFIG_DIR}
@@ -101,6 +87,20 @@ if [[ ! -d ${CONFIG_DIR} ]]; then
     "utp-enabled": true
 }
 EOF
+fi
+
+# switch user
+if [[ ! -z ${DOCKER_UID} ]]; then
+    if [[ -z ${DOCKER_GID} ]]; then
+        DOCKER_GID=${DOCKER_UID}
+    fi
+    USER=transmission
+    if [[ ! -f /.user-initialized ]]; then
+        groupadd -f -g ${DOCKER_GID} transmission
+        useradd -u ${DOCKER_UID} -g ${DOCKER_GID} --home-dir ${TRANSMISSION_DIR} transmission
+        chown ${DOCKER_UID}:${DOCKER_GID} -R ${TRANSMISSION_DIR}
+        touch /.user-initialized
+    fi
 fi
 
 if [[ ${USER} == "root" ]];then
