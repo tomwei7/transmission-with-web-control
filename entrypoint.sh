@@ -33,7 +33,7 @@ if [[ ! -d ${CONFIG_DIR} ]]; then
     "blocklist-enabled": false,
     "cache-size-mb": 4,
     "dht-enabled": true,
-    "download-dir": "${TRANSMISSION_DIR}",
+    "download-dir": "/downloads",
     "download-queue-enabled": true,
     "download-queue-size": 5,
     "encryption": 1,
