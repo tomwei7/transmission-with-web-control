@@ -17,7 +17,7 @@ if [[ ! -d ${TRANSMISSION_DIR} ]]; then
 fi
 
 # setup basic config
-if [[ ! -d ${CONFIG_DIR} ]]; then
+if [[ ! -f ${CONFIG_DIR}/settings.json ]]; then
     mkdir -p ${CONFIG_DIR}
     <<EOF tee > ${CONFIG_DIR}/settings.json
 {
