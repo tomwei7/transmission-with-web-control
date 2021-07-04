@@ -31,13 +31,12 @@ COPY --from=builder /opt/transmission-3.00 /opt/transmission-3.00
 RUN apt-get update && apt-get install -y libcurl4-openssl-dev libevent-dev libminiupnpc-dev libssl-dev
 
 EXPOSE 51413 9091
-VOLUME /var/lib/transmission
 VOLUME /downloads
 
 ENV TRANSMISSION_VERSION=3.00 
 ENV WEB_CONTROL_VERSION=1.6.1-update1
 
-WORKDIR /var/lib/transmission
+WORKDIR /downloads
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/opt/transmission-3.00/bin/transmission-daemon", "--config-dir", "/var/lib/transmission/.config/transmission-daemon", "--download-dir", "/var/lib/transmission", "--foreground"]
+CMD ["/opt/transmission-3.00/bin/transmission-daemon", "--config-dir", "/var/lib/transmission", "--download-dir", "/downloads", "--foreground"]

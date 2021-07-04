@@ -3,7 +3,7 @@ set -e
 
 USER=root
 TRANSMISSION_DIR=/var/lib/transmission
-CONFIG_DIR=${TRANSMISSION_DIR}/.config/transmission-daemon
+CONFIG_DIR=${TRANSMISSION_DIR}
 
 if [[ -z ${RPC_USERNAME} ]]; then
     RPC_USERNAME=transmission
@@ -33,13 +33,11 @@ if [[ ! -d ${CONFIG_DIR} ]]; then
     "blocklist-enabled": false,
     "cache-size-mb": 4,
     "dht-enabled": true,
-    "download-dir": "/downloads",
     "download-queue-enabled": true,
     "download-queue-size": 5,
     "encryption": 1,
     "idle-seeding-limit": 30,
     "idle-seeding-limit-enabled": false,
-    "incomplete-dir": "${TRANSMISSION_DIR}",
     "incomplete-dir-enabled": false,
     "lpd-enabled": false,
     "message-level": 2,
@@ -104,7 +102,7 @@ if [[ ! -z ${DOCKER_UID} ]]; then
 fi
 
 if [[ ${USER} == "root" ]];then
-    exec "$@"
+    exec $@
 fi
 
 exec su - ${USER} <<EOF
